@@ -1,0 +1,6 @@
+{
+  "name": "Megas Entel",
+  "description": "Compra rápida de megas para Entel Bolivia con comando directo USSD (*10*1*1*1*1# para 200MB por 2 Bs), widget de pantalla y control de vigencia.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

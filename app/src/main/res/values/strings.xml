@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Megas Entel</string>
+    <string name="widget_title">Acceso USSD</string>
+    <string name="widget_subtitle">Megas Entel Bolivia</string>
+    <string name="widget_open">Abrir</string>
+    <string name="widget_buy_200mb_title">200 MB por 2 Bs (24h)</string>
+    <string name="widget_buy_200mb_ussd">Comando: *10*1*1*1*1#</string>
+    <string name="widget_balance_code">Saldo (*105#)</string>
+    <string name="widget_menu_code">Menú (*10#)</string>
+    <string name="widget_description">Acceso rápido formal para compra de megas y consulta de saldo Entel</string>
+</resources>

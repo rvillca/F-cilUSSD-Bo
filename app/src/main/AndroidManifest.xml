@@ -2,7 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <!-- Normal and runtime permissions for USSD dialing and SIM detection -->
     <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
     <application
         android:allowBackup="true"
@@ -25,13 +27,13 @@
             </intent-filter>
         </activity>
 
-        <!-- Transparent activity to handle widget clicks -->
+        <!-- Transparent activity to handle widget clicks and confirmations -->
         <activity
             android:name=".widget.WidgetActionActivity"
             android:exported="false"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
-        <!-- Home Screen App Widget Provider -->
+        <!-- 1. Home Screen App Widget: Todo en Uno (All-in-one 5 buttons) -->
         <receiver
             android:name=".widget.EntelMegasWidgetProvider"
             android:exported="true">
@@ -41,6 +43,42 @@
             <meta-data
                 android:name="android.appwidget.provider"
                 android:resource="@xml/entel_megas_widget_info" />
+        </receiver>
+
+        <!-- 2. Home Screen App Widget: Botón 200 MB (2 Bs) -->
+        <receiver
+            android:name=".widget.Widget200MbProvider"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_200mb_info" />
+        </receiver>
+
+        <!-- 3. Home Screen App Widget: Botón 350 MB + WhatsApp (3 Bs) -->
+        <receiver
+            android:name=".widget.Widget350MbProvider"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_350mb_info" />
+        </receiver>
+
+        <!-- 4. Home Screen App Widget: Botón Megas Ilimitado 24h (6 Bs) -->
+        <receiver
+            android:name=".widget.WidgetUnlimitedProvider"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_unlimited_info" />
         </receiver>
     </application>
 

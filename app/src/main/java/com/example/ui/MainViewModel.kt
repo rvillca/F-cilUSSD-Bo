@@ -10,6 +10,9 @@ import com.example.data.model.EntelPackageCatalog
 import com.example.data.model.PackageCategory
 import com.example.data.model.PurchaseRecord
 import com.example.data.repository.PurchaseRepository
+import com.example.util.OperatorStatus
+import com.example.util.SimInfo
+import com.example.util.TelephonyHelper
 import com.example.util.UssdHelper
 import com.example.widget.EntelMegasWidgetProvider
 import kotlinx.coroutines.delay
@@ -25,6 +28,7 @@ import kotlinx.coroutines.launch
 class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     private val repository: PurchaseRepository
+    private val prefs = application.getSharedPreferences("app_settings", Context.MODE_PRIVATE)
 
     init {
         val database = AppDatabase.getDatabase(application)
@@ -57,13 +61,68 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     private val _currentTimeMillis = MutableStateFlow(System.currentTimeMillis())
     val currentTimeMillis: StateFlow<Long> = _currentTimeMillis.asStateFlow()
 
+    // SIM and Operator detection state (Entel Bolivia MCC 736, MNC 02)
+    private val _operatorStatus = MutableStateFlow<OperatorStatus>(OperatorStatus.DetectionPending)
+    val operatorStatus: StateFlow<OperatorStatus> = _operatorStatus.asStateFlow()
+
+    private val _targetEntelSim = MutableStateFlow<SimInfo?>(null)
+    val targetEntelSim: StateFlow<SimInfo?> = _targetEntelSim.asStateFlow()
+
     init {
         viewModelScope.launch {
+            // Initial check
+            refreshSimStatus(application)
+
             while (true) {
                 _currentTimeMillis.value = System.currentTimeMillis()
                 delay(1000)
             }
         }
+    }
+
+    fun refreshSimStatus(context: Context) {
+        val status = TelephonyHelper.evaluateOperatorStatus(context)
+        _operatorStatus.value = status
+        _targetEntelSim.value = TelephonyHelper.getEntelSim(context)
+    }
+
+    // Advanced / Developer mode toggle (false by default for senior adult simplicity)
+    private val _isAdvancedMode = MutableStateFlow(prefs.getBoolean("advanced_mode", false))
+    val isAdvancedMode: StateFlow<Boolean> = _isAdvancedMode.asStateFlow()
+
+    private val _isAdvancedSettingsDialogOpen = MutableStateFlow(false)
+    val isAdvancedSettingsDialogOpen: StateFlow<Boolean> = _isAdvancedSettingsDialogOpen.asStateFlow()
+
+    // About & Compliance Dialog
+    private val _isAboutDialogOpen = MutableStateFlow(false)
+    val isAboutDialogOpen: StateFlow<Boolean> = _isAboutDialogOpen.asStateFlow()
+
+    fun openAboutDialog() {
+        _isAboutDialogOpen.value = true
+    }
+
+    fun closeAboutDialog() {
+        _isAboutDialogOpen.value = false
+    }
+
+    fun toggleAdvancedMode(): Boolean {
+        val newVal = !_isAdvancedMode.value
+        _isAdvancedMode.value = newVal
+        prefs.edit().putBoolean("advanced_mode", newVal).apply()
+        return newVal
+    }
+
+    fun setAdvancedMode(enabled: Boolean) {
+        _isAdvancedMode.value = enabled
+        prefs.edit().putBoolean("advanced_mode", enabled).apply()
+    }
+
+    fun openAdvancedSettingsDialog() {
+        _isAdvancedSettingsDialogOpen.value = true
+    }
+
+    fun closeAdvancedSettingsDialog() {
+        _isAdvancedSettingsDialogOpen.value = false
     }
 
     private val _customPackages = MutableStateFlow<List<EntelPackage>>(emptyList())
@@ -126,15 +185,8 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     /**
-     * Direct purchase for the user's requested 200MB x 2 Bs (24h) package
-     * with USSD code *10*1*1*1*1#
-     */
-    fun buyStarPackage(context: Context) {
-        buyPackage(context, EntelPackageCatalog.STAR_PACKAGE)
-    }
-
-    /**
-     * Executes USSD and records purchase in Room
+     * Executes USSD and records purchase in Room.
+     * In Dual SIM devices, routes the call to the detected Entel SIM.
      */
     fun buyPackage(context: Context, pkg: EntelPackage) {
         if (pkg.priceBs > 0) {
@@ -153,7 +205,8 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
             }
         }
 
-        UssdHelper.executeUssd(context, pkg.ussdCode)
+        // Uses target Entel SIM if identified
+        UssdHelper.executeUssd(context, pkg.ussdCode, targetSim = _targetEntelSim.value)
     }
 
     fun addCustomPackage(title: String, megasAmount: Int, priceBs: Double, hours: Int, ussdCode: String) {

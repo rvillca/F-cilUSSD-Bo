@@ -1,6 +1,6 @@
 {
-  "name": "Megas Entel",
-  "description": "Compra rápida de megas para Entel Bolivia con comando directo USSD (*10*1*1*1*1# para 200MB por 2 Bs), widget de pantalla y control de vigencia.",
+  "name": "FácilUSSD Bo",
+  "description": "Utilidad de marcación rápida USSD para paquetes de datos y saldo de Entel Bolivia. Compatible con Dual SIM, accesible para adultos mayores y 100% local.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

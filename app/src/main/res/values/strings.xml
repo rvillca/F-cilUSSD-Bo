@@ -1,11 +1,16 @@
 <resources>
-    <string name="app_name">Megas Entel</string>
-    <string name="widget_title">Acceso USSD</string>
-    <string name="widget_subtitle">Megas Entel Bolivia</string>
+    <string name="app_name">FácilUSSD Bo</string>
+    <string name="widget_title">FácilUSSD</string>
+    <string name="widget_subtitle">Marcación Rápida Entel</string>
     <string name="widget_open">Abrir</string>
     <string name="widget_buy_200mb_title">200 MB por 2 Bs (24h)</string>
     <string name="widget_buy_200mb_ussd">Comando: *10*1*1*1*1#</string>
     <string name="widget_balance_code">Saldo (*105#)</string>
     <string name="widget_menu_code">Menú (*10#)</string>
-    <string name="widget_description">Acceso rápido formal para compra de megas y consulta de saldo Entel</string>
+    <string name="widget_description">Widget Todo en Uno con 200MB, 350MB+WA, Ilimitado, Doble Carga y Saldo</string>
+    <string name="widget_all_in_one_description">Widget Todo en Uno con 200MB, 350MB+WA, Ilimitado, Doble Carga y Saldo</string>
+    <string name="widget_200mb_description">Botón de acceso directo para 200 MB por 2 Bs y Saldo</string>
+    <string name="widget_350mb_description">Botón de acceso directo para 350 MB + WhatsApp por 3 Bs y Saldo</string>
+    <string name="widget_unlimited_description">Botón de acceso directo para Megas Ilimitado 24h por 6 Bs y Saldo</string>
+    <string name="disclaimer_text">Descargo de responsabilidad: Esta aplicación es una utilidad independiente. No está afiliada, asociada, ni respaldada por Entel S.A. Los comandos USSD son funciones públicas provistas por el operador.</string>
 </resources>

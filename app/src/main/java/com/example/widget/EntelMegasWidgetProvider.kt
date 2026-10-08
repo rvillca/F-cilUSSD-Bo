@@ -48,11 +48,41 @@ class EntelMegasWidgetProvider : AppWidgetProvider() {
             )
             views.setOnClickPendingIntent(R.id.widget_btn_buy_200mb, buyPendingIntent)
 
-            // Button 2: Consultar Saldo (*105#)
+            // Button 2: Comprar 350 MB + WhatsApp por 3 Bs (*10*1*1*2*1#)
+            val buy350Intent = WidgetActionActivity.createBuy350MbWaIntent(context)
+            val buy350PendingIntent = PendingIntent.getActivity(
+                context,
+                102,
+                buy350Intent,
+                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+            )
+            views.setOnClickPendingIntent(R.id.widget_btn_buy_350mb, buy350PendingIntent)
+
+            // Button 3: Comprar Ilimitado 24h por 6 Bs (*10*1*3*1*1#)
+            val buyUnlimitedIntent = WidgetActionActivity.createBuyUnlimitedIntent(context)
+            val buyUnlimitedPendingIntent = PendingIntent.getActivity(
+                context,
+                103,
+                buyUnlimitedIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+            )
+            views.setOnClickPendingIntent(R.id.widget_btn_buy_unlimited, buyUnlimitedPendingIntent)
+
+            // Button 4: Activar Doble Carga Mensual (*10*4*1#)
+            val dobleCargaIntent = WidgetActionActivity.createDobleCargaIntent(context)
+            val dobleCargaPendingIntent = PendingIntent.getActivity(
+                context,
+                104,
+                dobleCargaIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+            )
+            views.setOnClickPendingIntent(R.id.widget_btn_doble_carga, dobleCargaPendingIntent)
+
+            // Button 5: Consultar Saldo (*105#)
             val balanceIntent = WidgetActionActivity.createBalanceIntent(context)
             val balancePendingIntent = PendingIntent.getActivity(
                 context,
-                102,
+                105,
                 balanceIntent,
                 PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
             )

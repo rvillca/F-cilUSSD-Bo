@@ -22,6 +22,6 @@ dependencyResolutionManagement {
   }
 }
 
-rootProject.name = "Megas Entel"
+rootProject.name = "FácilUSSD Bo"
 
 include(":app")

@@ -37,8 +37,59 @@ object EntelPackageCatalog {
         description = "Compra directa instantánea por 2 Bs válida por 24 horas"
     )
 
+    val PACKAGE_350MB_WHATSAPP = EntelPackage(
+        id = "direct_350mb_wa_3bs",
+        title = "350 MB + WhatsApp",
+        megasLabel = "350 MB + WA",
+        megasAmount = 350,
+        priceBs = 3.0,
+        validityLabel = "24 Horas",
+        validityHours = 24,
+        ussdCode = "*10*1*1*2*1#",
+        category = PackageCategory.FEATURED,
+        isFeatured = true,
+        description = "350 Megabytes con WhatsApp por 24 horas por 3 Bs"
+    )
+
+    val PACKAGE_UNLIMITED_24H = EntelPackage(
+        id = "direct_unlimited_6bs",
+        title = "Megas Ilimitado 24h",
+        megasLabel = "Ilimitado",
+        megasAmount = 10000,
+        priceBs = 6.0,
+        validityLabel = "24 Horas",
+        validityHours = 24,
+        ussdCode = "*10*1*3*1*1#",
+        category = PackageCategory.FEATURED,
+        isFeatured = true,
+        description = "Internet y descargas sin límite por 24 horas por 6 Bs"
+    )
+
+    val PROMO_DOBLE_CARGA = EntelPackage(
+        id = "promo_doble_carga",
+        title = "Activar Doble Carga",
+        megasLabel = "2x Saldo",
+        megasAmount = 0,
+        priceBs = 0.0,
+        validityLabel = "1 vez al mes",
+        validityHours = 720,
+        ussdCode = "*10*4*1#",
+        category = PackageCategory.FEATURED,
+        isFeatured = true,
+        description = "Activa el beneficio de doble carga de saldo Entel (1 vez al mes)"
+    )
+
+    val POPULAR_PACKAGES = listOf(
+        STAR_PACKAGE,
+        PACKAGE_350MB_WHATSAPP,
+        PACKAGE_UNLIMITED_24H
+    )
+
     val DEFAULT_PACKAGES: List<EntelPackage> = listOf(
         STAR_PACKAGE,
+        PACKAGE_350MB_WHATSAPP,
+        PACKAGE_UNLIMITED_24H,
+        PROMO_DOBLE_CARGA,
         EntelPackage(
             id = "pack_500mb_5bs",
             title = "500 MB Diario",
